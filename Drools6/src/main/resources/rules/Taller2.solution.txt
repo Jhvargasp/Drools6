@@ -1,0 +1,19 @@
+package com.sample
+ 
+import beans.dsl.Customer;
+import beans.dsl.Account;
+import beans.dsl.AccountService;
+ 
+ global AccountService accountService;
+ 
+rule "Print all customers"
+    when
+        c : Customer( $name : name)
+    then
+        System.out.println("All customers (con variable): "+ $name + ", isEnabled= "+ c.isEnabled() );
+        System.out.println(calculateDouble(100));
+end
+
+function double calculateDouble(double value) {
+	return value * value;
+}

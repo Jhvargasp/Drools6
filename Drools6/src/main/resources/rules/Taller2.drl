@@ -1,0 +1,17 @@
+package com.sample
+ 
+import FILL_HERE;
+global FILL_HERE;
+ 
+rule "Print all customers"
+    when
+        FILL_HERE
+    then
+        System.out.println("All customers (con variable): "+ $name + ", isEnabled= "+ c.isEnabled() );
+        System.out.println(calculateDouble(100));
+end
+
+
+function double FILL_HERE {
+	return value * value;
+}

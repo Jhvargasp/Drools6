@@ -1,0 +1,25 @@
+//created on: 12/06/2015
+package com.sample
+
+import beans.dsl.Customer;
+
+rule"Aexpense greater than 1000"
+when
+   $customer : Customer( expense > 1000, registered == false);
+then
+	System.out.println("1");
+   $customer.setDiscount(AgetDiscount($customer.getExpense(), 10));
+end
+
+rule"ARegistered customer and expense greater than 1000"
+when
+   $customer : Customer( registered == true, expense > 1000)
+then
+	System.out.println("2");
+   $customer.setDiscount(AgetDiscount($customer.getExpense(), 15));
+end
+
+function Double AgetDiscount(Double expense, int discount){
+  return (expense * discount) / 100;
+}
+ 

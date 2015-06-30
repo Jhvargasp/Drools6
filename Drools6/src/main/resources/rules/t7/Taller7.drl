@@ -1,0 +1,46 @@
+package com.sample
+ 
+import beans.dsl.Customer;
+import beans.dsl.Account;
+import beans.dsl.AccountService;
+ 
+ global AccountService accountService;
+ 
+ 
+ rule "RULE1  expense more 100, discount 10%"
+ no-loop
+    when
+        c : Customer( $name : name,expense >100)
+    then
+        System.out.println("MORE Update discount : "+ $name);
+        modify (c){
+       		setDiscount(0.10);
+       	}
+end
+ 
+ rule "RULE2  expense less 100, discount 10%"
+ no-loop
+    when
+        c : Customer( $name : name,expense <= 100)
+    then
+        System.out.println("LESS Update discount : "+ $name);
+        modify (c){
+       		setDiscount(0.05);
+       	}
+end
+ 
+rule "RULE3 discount 10% or MORE, print status message"
+    when
+        c : Customer( $name : name,discount >=0.1)
+    then
+        System.out.println("STATUS MESSAGE : "+ $name);
+end
+ 
+rule "RULE4 discount 10% or LESS, print status message"
+    when
+        c : Customer( $name : name,discount <0.1)
+    then
+        System.out.println("STATUS MESSAGE : "+ $name);
+end
+ 
+ 

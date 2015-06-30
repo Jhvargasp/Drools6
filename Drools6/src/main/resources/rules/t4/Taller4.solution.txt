@@ -1,0 +1,79 @@
+package com.sample
+ 
+import beans.dsl.Customer;
+import beans.dsl.Account;
+import beans.dsl.AccountService;
+ 
+ global AccountService accountService;
+ 
+ rule "Update rule NOLOOP:  expense more 100, discount 10%"
+salience 3
+agenda-group 'agendaUpdate'
+    when
+        c : Customer( $name : name,expense >100)
+    then
+        System.out.println("RG:ONE Update discount : "+ $name);
+       	c.setDiscount(0.10);
+end
+ 
+rule "Update rule LOOP:  expense more 100, discount 10%"
+salience 2
+agenda-group 'agendaUpdate'
+    when
+        c : Customer( $name : name,expense >100,discount == null)
+    then
+        System.out.println("RG:ONE Update discount : "+ $name);
+        modify (c){
+        	setDiscount(0.10);
+        }
+end
+ 
+ 
+ 
+rule "Eval rule:  Name has than 10 characters"
+salience 3
+agenda-group 'one'
+    when
+        c : Customer( $name : name)
+        eval($name.length()>10)
+    then
+        System.out.println("RG:ONE Name has 10 or more characters : "+ $name);
+end
+
+rule "AND rule:  Customer is enabled and name starts with Adam"
+salience 2
+agenda-group 'one'
+    when
+        c : Customer( name matches "Adam[A-Z a-z]+" , enabled ==true)
+    then
+        System.out.println("RG:ONE Customer is enabled and Name starts with Adam " + c.getName());
+end
+
+rule "OR rule:  Customer is enabled OR name starts with William"
+salience 1
+agenda-group 'one'
+    when
+        c : Customer( name matches "Wiliam[A-Z a-z]+" || enabled ==true)
+    then
+        System.out.println("RG:ONE Customer is enabled OR Name starts with WILLIAM " + c.getName());
+end
+
+rule "Contains:  account in Customer"
+salience 1
+agenda-group 'two'
+    when
+    	$account:Account( )
+        c : Customer( accounts contains $account)
+    then
+        System.out.println("RG:TWO Customer "+ c.getName()+" has associated account "+$account.getId() );
+end
+
+rule "Contains:  account not in Customer"
+salience 0 
+agenda-group 'two'
+    when
+    	$account:Account( )
+        c : Customer( accounts not contains $account)
+    then
+        System.out.println("RG:TWO Customer "+ c.getName()+" hasn´t associated account "+$account.getId() );
+end

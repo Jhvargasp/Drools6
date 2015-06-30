@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kmodule xmlns="http://jboss.org/kie/6.0.0/kmodule">
+	<kbase name="rules" packages="rules">
+		<ksession name="KSession2_1" type="stateful" default="true" />
+		<ksession name="ksession-rules" type="stateless" />
+	</kbase>
+	<kbase name="rules4" packages="rules.t3">
+		<ksession name="KSession_Taller3" type="stateful" />
+	</kbase>
+	<kbase name="rules5" packages="rules.t4">
+		<ksession name="KSession_Taller4" type="stateful" />
+	</kbase>
+	<kbase name="rules2" packages="rules.t5">
+		<ksession name="KSession_Taller5" type="stateful" />
+	</kbase>
+	<kbase name="rules3" packages="rules.t5_2">
+		<ksession name="KSession_Taller5_2" type="stateful" />
+	</kbase>
+	<kbase name="rules6" packages="rules.t6">
+		<ksession name="t6Stateless" type="stateless" />
+		<ksession name="t6Statefull" type="stateful" default="true"/>
+	</kbase>
+	<kbase name="rules7" packages="rules.t7">
+		<ksession name="t7Statefull" type="stateful" default="true"/>
+	</kbase>
+
+</kmodule>

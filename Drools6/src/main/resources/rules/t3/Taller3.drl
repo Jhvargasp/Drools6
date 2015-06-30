@@ -1,0 +1,57 @@
+package com.sample
+ 
+import beans.dsl.Customer;
+import beans.dsl.Account;
+import beans.dsl.AccountService;
+ 
+ global AccountService accountService;
+ 
+
+rule "Eval rule:  Cross product"
+agenda-group "crossproduct"
+    when
+        $c : Customer( $name : name)
+        $account:Account( )
+        //$c : Customer($name : name, accounts contains $account)
+    then
+        System.out.println("!!!Customer name : "+ $name +", account "+$account.getId());
+end
+
+
+rule "Eval rule:  Name has than 10 characters"
+    when
+        c : Customer( $name : name)
+        eval(FILL_HERE>10)
+    then
+        System.out.println("Name has 10 or more characters : "+ $name);
+end
+
+rule "AND rule:  Customer is enabled and name starts with Adam"
+    when
+        c : Customer( name matches FILL_HERE , enabled == FILL_HERE)
+    then
+        System.out.println("Customer is enabled and Name starts with Adam " + c.getName());
+end
+
+rule "OR rule:  Customer is enabled OR name starts with William"
+    when
+        c : Customer(FILL_HERE)
+    then
+        System.out.println("Customer is enabled OR Name starts with WILLIAM " + c.getName());
+end
+
+rule "Contains:  account in Customer"
+    when
+    	$account:Account( )
+        c : Customer( accounts contains $account)
+    then
+        System.out.println("Customer "+ c.getName()+" has associated account "+$account.getId() );
+end
+
+rule "Contains:  account not in Customer"
+    when
+    	$account:Account( )
+        c : Customer( FILL_HERE)
+    then
+        System.out.println("Customer "+ c.getName()+" hasn´t associated account "+$account.getId() );
+end
